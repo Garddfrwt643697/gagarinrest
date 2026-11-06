@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Gagarin Gastro Bar — Вологда</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; overflow-x: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #0a0a0c;
+      color: #fff;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ============ ФОН ============ */
+    .garland-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 20%, #2a2a30 0%, #16161a 45%, #0a0a0c 100%);
+      filter: blur(1px);
+    }
+    .aurora {
+      position: absolute;
+      top: -10%; left: -20%;
+      width: 140%; height: 60%;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(200,200,220,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 70%, rgba(180,180,200,0.05) 0%, transparent 60%);
+      filter: blur(30px);
+      animation: auroraMove 12s ease-in-out infinite alternate;
+    }
+    @keyframes auroraMove {
+      0%   { transform: translateX(-5%) scale(1);   opacity: 0.7; }
+      100% { transform: translateX(5%)  scale(1.08); opacity: 1; }
+    }
+
+    /* ============ АНИМЕ-СНЕГОПАД ============ */
+    .snowfall {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .snowflake {
+      position: absolute;
+      top: -20px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 8px 2px rgba(255,255,255,0.6),
+                  0 0 16px 4px rgba(255,255,255,0.2);
+      filter: blur(0.5px);
+      animation: snowFall linear infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes snowFall {
+      0%   { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translate3d(20px, 50vh, 0) rotate(180deg); }
+      90%  { opacity: 1; }
+      100% { transform: translate3d(-10px, 105vh, 0) rotate(360deg); opacity: 0; }
+    }
+
+    /* ============ КОНТЕНТ ============ */
+    .content {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 24px;
+    }
+
+    /* ============ ШАПКА ============ */
+    .header-banner {
+      width: 100%;
+      max-height: 112px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(0.15) contrast(1.05);
+    }
+
+    /* ============ МИШУРА ПОД ШАПКОЙ ============ */
+    .mishura-under-header {
+      display: block;
+      width: 100vw;
+      height: auto;
+      min-height: 46px;
+      object-fit: cover;
+      margin: 0;
+      filter: drop-shadow(0 3px 10px rgba(255,255,255,0.25));
+      position: relative;
+      z-index: 6;
+    }
+
+    /* ============ ПРАЗДНИЧНАЯ ПЛАШКА ============ */
+    .festive-banner {
+      margin-top: 14px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+      padding: 0 15px;
+    }
+    .festive-banner::before,
+    .festive-banner::after {
+      content: '❄';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+    }
+    .festive-banner::before { left: 0; }
+    .festive-banner::after  { right: 0; }
+
+    /* ============ ЛОГОТИП + МИШУРА ============ */
+    .logo-area {
+      position: relative;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+    .mishura-logo {
+      display: block;
+      width: 82vw;
+      max-width: 300px;
+      height: auto;
+      min-height: 44px;
+      object-fit: contain;
+      margin-bottom: -18px;
+      position: relative;
+      z-index: 5;
+      filter: drop-shadow(0 3px 10px rgba(255,255,255,0.3));
+      animation: mishuraFloat 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes mishuraFloat {
+      0%   { transform: translateY(0) rotate(-1deg); }
+      100% { transform: translateY(-3px) rotate(1deg); }
+    }
+    .logo-wrap {
+      position: relative;
+      display: inline-block;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    /* Золотой блик на лого */
+    .logo-wrap::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -100%;
+      width: 50%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.4), transparent);
+      transform: rotate(30deg);
+      animation: logoShine 6s ease-in-out infinite;
+      z-index: 4;
+      pointer-events: none;
+    }
+    @keyframes logoShine {
+      0%   { left: -100%; }
+      20%  { left: 200%; }
+      100% { left: 200%; }
+    }
+    .logo {
+      position: relative;
+      z-index: 3;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      animation: logoPulse 4s ease-in-out infinite;
+      display: block;
+    }
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 0 20px 6px rgba(255,255,255,0.35), 0 0 50px 16px rgba(255,255,255,0.1); }
+      50%      { box-shadow: 0 0 30px 10px rgba(255,255,255,0.55), 0 0 80px 28px rgba(255,255,255,0.2); }
+    }
+
+    /* ============ ИНФО-БЛОК ============ */
+    .info-card {
+      width: 85%;
+      max-width: 384px;
+      margin-top: 22px;
+      padding: 18px 22px;
+      border-radius: 16px;
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      background: rgba(18, 18, 22, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    .info-card p { margin-bottom: 6px; color: #e8e8ec; }
+    .info-card a { color: #fff; text-decoration: none; transition: color 0.2s; border-bottom: 1px solid rgba(255,255,255,0.3); }
+    .info-card a:hover { color: #d0d0d8; }
+
+    /* ============ ДЕЙСТВИЯ ============ */
+    .actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 34px;
+      margin-top: 34px;
+    }
+
+    @keyframes snowEdge {
+      0%, 100% { box-shadow: 0 0 12px 2px rgba(255,255,255,0.35), 0 0 24px 6px rgba(255,255,255,0.1); }
+      50%      { box-shadow: 0 0 20px 5px rgba(255,255,255,0.6),  0 0 40px 12px rgba(255,255,255,0.18); }
+    }
+
+
+    /* Кнопка «Меню» */
+    .btn-menu {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 85%;
+      max-width: 384px;
+      padding: 15px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+      border-radius: 9999px;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: snowEdge 4s ease-in-out infinite;
+      transition: transform 0.15s ease;
+    }
+    .btn-menu::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(0,0,0,0.08), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn-menu:hover::after { left: 120%; }
+    .btn-menu:active { transform: scale(0.96); }
+    .btn-menu span { font-size: 14px; }
+
+    /* Заголовок отзывов */
+    .review-title {
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #f2f2f5;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-align: center;
+      position: relative;
+      padding: 0 20px;
+    }
+    .review-title::before,
+    .review-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 30px;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+    }
+    .review-title::before { left: -10px; }
+    .review-title::after  { right: -10px; }
+
+    /* ============ ИКОНКИ ОТЗЫВОВ ============ */
+    .review-icons {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      width: 100%;
+      max-width: 384px;
+      margin-top: 4px;
+    }
+    .review-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+      transition: transform 0.15s ease;
+    }
+    .review-item:active { transform: scale(0.94); }
+    .review-icon-wrap {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: snowEdge 4s ease-in-out infinite;
+    }
+    .review-item:nth-child(1) .review-icon-wrap { animation-delay: 0s; }
+    .review-item:nth-child(2) .review-icon-wrap { animation-delay: 1.3s; }
+
+    .review-icon-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .review-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #e8e8ec;
+      text-align: center;
+    }
+
+    /* ============ НИЗ: ЁЛКА + СНЕГОВИК + ПОДАРОК ============ */
+    .bottom-scene {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      margin-top: 44px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 10px;
+      padding-bottom: 8px;
+    }
+    .elka-sticker {
+      width: 150px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45)) grayscale(0.1);
+      animation: elkaSway 4s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+    @keyframes elkaSway {
+      0%   { transform: rotate(-2deg); }
+      100% { transform: rotate(2deg); }
+    }
+    .snowman-sticker {
+      width: 140px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45)) grayscale(0.1);
+      animation: snowmanBob 3s ease-in-out infinite alternate;
+    }
+    @keyframes snowmanBob {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-4px); }
+    }
+    .gift-mini {
+      position: absolute;
+      right: 2%;
+      bottom: 10px;
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+      animation: giftWiggle 2.4s ease-in-out infinite;
+      z-index: 4;
+    }
+    @keyframes giftWiggle {
+      0%, 100% { transform: rotate(-5deg); }
+      50%      { transform: rotate(5deg); }
+    }
+
+    /* ============ СУГРОБ ============ */
+    .snowdrift-wrap {
+      position: relative;
+      width: 100vw;
+      margin-top: -8px;
+      user-select: none;
+    }
+    .snowdrift {
+      width: 100%;
+      height: 60px;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      background: linear-gradient(180deg, #f8f8fa 0%, #e8e8ee 35%, #d0d0d8 70%, #b8b8c4 100%);
+      box-shadow: inset 0 10px 24px rgba(255,255,255,0.9),
+                  0 -4px 16px rgba(255,255,255,0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Фон -->
+  <div class="garland-bg" aria-hidden="true">
+    <div class="aurora"></div>
+    <div style="position:absolute;top:10%;left:70%;width:180px;height:180px;border-radius:50%;filter:blur(45px);background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);"></div>
+    <div style="position:absolute;bottom:15%;left:5%;width:220px;height:220px;border-radius:50%;filter:blur(45px);background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%);"></div>
+    <div style="position:absolute;top:40%;left:40%;width:160px;height:160px;border-radius:50%;filter:blur(45px);background:radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 70%);"></div>
+  </div>
+
+  <!-- Снегопад -->
+  <div class="snowfall" id="snowfall" aria-hidden="true"></div>
+
+  <!-- Контент -->
+  <div class="content">
+
+    <!-- Шапка -->
+    <img src="shapka.jpg" alt="Gagarin Gastro Bar" class="header-banner" onerror="this.style.display='none'" />
+
+    <!-- Мишура под шапкой -->
+    <img src="mishura.gif" alt="" class="mishura-under-header" onerror="this.style.display='none'" />
+
+    <!-- Праздничная плашка -->
+    <div class="festive-banner">Новогоднее настроение</div>
+
+    <!-- Логотип + мишура -->
+    <div class="logo-area">
+      <img src="mishura.gif" alt="" class="mishura-logo" onerror="this.style.display='none'" />
+      <div class="logo-wrap">
+        <img src="logo.png" alt="Gagarin Gastro Bar logo" class="logo" onerror="this.style.display='none'" />
+      </div>
+    </div>
+
+    <!-- Инфо-блок -->
+    <div class="info-card">
+      <p>📍 ул. Возрождения, 27, Вологда</p>
+      <a href="tel:+78172507450">📞 +7 (8172) 50-74-50</a>
+    </div>
+
+    <!-- Действия -->
+    <div class="actions">
+      <a class="btn-menu" href="https://foodeon.com/venue/gagarin-gastro-bar-slqs" target="_blank" rel="noopener noreferrer">
+        <span>❄</span> Посмотреть меню <span>❄</span>
+      </a>
+
+      <div class="review-title">Оставьте отзыв о нас</div>
+
+      <div class="review-icons">
+        <!-- Яндекс -->
+        <a class="review-item" href="https://yandex.ru/maps/org/gagarin_gastro_bar/37738191246/" target="_blank" rel="noopener noreferrer">
+          <div class="review-icon-wrap">
+            <!-- Исправлено на кириллицу как на скрине -->
+            <img src="яндекс.jpg" alt="Яндекс Карты" onerror="this.style.display='none'" />
+          </div>
+          <span class="review-label">Яндекс<br/>Карты</span>
+        </a>
+
+        <!-- 2ГИС -->
+        <a class="review-item" href="https://go.2gis.com/1yZ9V" target="_blank" rel="noopener noreferrer">
+          <div class="review-icon-wrap">
+            <!-- Исправлено на кириллицу как на скрине -->
+            <img src="2ГИС.jpg" alt="2ГИС" onerror="this.style.display='none'" />
+          </div>
+          <span class="review-label">2ГИС</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Низ: ёлка + снеговик + подарок -->
+    <div class="bottom-scene">
+      <img src="elka.gif" alt="" class="elka-sticker" onerror="this.style.display='none'" />
+      <img src="snowman.gif" alt="" class="snowman-sticker" onerror="this.style.display='none'" />
+      <img src="gift.png" alt="" class="gift-mini" onerror="this.style.display='none'" />
+    </div>
+
+    <!-- Сугроб -->
+    <div class="snowdrift-wrap" aria-hidden="true">
+      <div class="snowdrift"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // ===== АНИМЕ-СНЕГОПАД =====
+    (function () {
+      const snow = document.getElementById('snowfall');
+      const count = 90;
+      for (let i = 0; i < count; i++) {
+        const flake = document.createElement('div');
+        flake.className = 'snowflake';
+        const size = Math.random() * 6 + 3;
+        flake.style.left = (Math.random() * 100).toFixed(2) + '%';
+        flake.style.width = size.toFixed(1) + 'px';
+        flake.style.height = size.toFixed(1) + 'px';
+        flake.style.opacity = (Math.random() * 0.4 + 0.5).toFixed(2);
+        flake.style.animationDuration = (Math.random() * 10 + 10).toFixed(1) + 's';
+        flake.style.animationDelay = (Math.random() * 14).toFixed(1) + 's';
+        snow.appendChild(flake);
+      }
+    })();
+  </script>
+
+</body>
+</html>
